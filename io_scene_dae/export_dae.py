@@ -193,7 +193,7 @@ class DaeExporter:
   # the file path should be surrounded by <ref> tags
 
   self.writel(S_IMGS, 2, '<init_from><ref>' +
-     imgpath + '</ref></init_from>')
+     image_id + ".png" + '</ref></init_from>')
 
   self.writel(S_IMGS, 1, '</image>')
 
@@ -254,10 +254,9 @@ class DaeExporter:
   specular_tex = self.find_blender_material_specular(material)
   emission_tex = self.find_blender_material_emission(material)
   normal_tex = self.find_blender_material_normal(material)
-  ambient_tex = ''# self.find_blender_material_ambient(material)
   transparent_tex = self.find_blender_material_alpha(material)
 
-  all_images = diffuse_tex | specular_tex | emission_tex | normal_tex | ambient_tex | transparent_tex
+  all_images = diffuse_tex | specular_tex | emission_tex | normal_tex | transparent_tex
   sampler_sids = {image: self.export_sampler2d(
    image_lookup[image]) for image in all_images}
 
@@ -276,16 +275,11 @@ class DaeExporter:
   self.writel(S_FX, 5, '</emission>')
 
   self.writel(S_FX, 5, '<ambient>')
-  if (len(ambient_tex)):
-   self.writel(S_FX, 6, '<texture texture="' +
-      sampler_sids[ambient_tex.pop()] + '" texcoord="UVMap"/>')
+  if self.bpy_context_scene.world:
+   self.writel(S_FX, 6, '<color>' + numarr_alpha(self.bpy_context_scene.world.ambient_color, material.ambient) + ' </color>')
   else:
-   if self.bpy_context_scene.world:
-    self.writel(S_FX, 6, '<color>' + numarr_alpha(
-     self.bpy_context_scene.world.ambient_color, material.ambient) + ' </color>')
-   else:
-    self.writel(
-     S_FX, 6, '<color>' + numarr_alpha(Color((0, 0, 0)), material.ambient) + ' </color>')
+   self.writel(S_FX, 6, '<color>' + numarr_alpha(Color((0, 0, 0)), material.ambient) + ' </color>')
+
 
   self.writel(S_FX, 5, '</ambient>')
 
