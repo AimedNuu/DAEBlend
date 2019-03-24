@@ -254,7 +254,7 @@ class DaeExporter:
   specular_tex = self.find_blender_material_specular(material)
   emission_tex = self.find_blender_material_emission(material)
   normal_tex = self.find_blender_material_normal(material)
-  ambient_tex = self.find_blender_material_ambient(material)
+  ambient_tex = ''# self.find_blender_material_ambient(material)
   transparent_tex = self.find_blender_material_alpha(material)
 
   all_images = diffuse_tex | specular_tex | emission_tex | normal_tex | ambient_tex | transparent_tex
