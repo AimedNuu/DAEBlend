@@ -193,7 +193,7 @@ class DaeExporter:
   # the file path should be surrounded by <ref> tags
 
   self.writel(S_IMGS, 2, '<init_from><ref>' +
-     xml_path + '</ref></init_from>')
+     imgpath + '</ref></init_from>')
 
   self.writel(S_IMGS, 1, '</image>')
 
