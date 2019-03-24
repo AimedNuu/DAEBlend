@@ -944,7 +944,7 @@ class DaeExporter:
    has_normals = True
   else:
    has_normals = len(normals) > 0
-  has_uv = not morph and (len(uv) > 0)
+  has_uv = False
   has_colors = not morph and (has_vertex and len(colors) > 0)
   has_tangents = not morph and (len(tangents) > 0)
   has_bitangents = not morph and (has_normals and has_tangents and (len(bitangents) > 0))
